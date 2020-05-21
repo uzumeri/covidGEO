@@ -42,3 +42,10 @@ rsconnect/
 # Private and Sandbox R code
 */sandbox.R
 */geoCoV_GA_private.R
+
+# Windows System Files
+*.ini
+
+# Folder Files
+data/
+archive/
