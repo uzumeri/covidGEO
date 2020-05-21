@@ -36,9 +36,7 @@ nyt_url <- paste("https://raw.githubusercontent.com/nytimes/",
                  sep = "")
 
 # the URL for the GitHub Data Packaged Core Datasets (U.S. Counties, confirmed cases)
-dpc_url <- paste("https://raw.githubusercontent.com/datasets/", 
-                 "covid-19/master/data/us_confirmed.csv",
-                 sep = "")
+dpc_url <- "https://raw.githubusercontent.com/datasets/covid-19/master/data/us_confirmed.csv"
 
 # the URL for the COVID Tracking Project (US COVID-19 testing and mortality by state)
 ctp_url <- "https://covidtracking.com/api/v1/states/current.csv"
@@ -46,7 +44,7 @@ ctp_url <- "https://covidtracking.com/api/v1/states/current.csv"
 
 covid_jhu <- readr::read_csv(jhu_url)
 covid_nyt <- readr::read_csv(nyt_url)
-covid_dpc <- readr::read_csv(dcp_url)
+covid_dpc <- readr::read_csv(dpc_url)
 covid_ctp <- readr::read_csv(ctp_url)
 
 
