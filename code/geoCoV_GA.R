@@ -33,7 +33,7 @@ jhu_url <- paste("https://raw.githubusercontent.com/CSSEGISandData/",
 
 # U.S. Census API key
 ## Obtain one at http://api.census.gov/data/key_signup.html
-census_key <- "XXXXX" # INSERT PERSONAL CENSUS KEY HERE
+census_key <- "63b371605f258f653a7bda49a0ea00984c751497" # INSERT PERSONAL CENSUS KEY HERE
 
 ############
 # PACKAGES #
@@ -69,30 +69,31 @@ GA_pop_2010 <- tidycensus::get_decennial(geography = "county",
                                          variables = "P001001", # total population
                                          year = 2010,
                                          state = c("Georgia"),
-                                         geometry = TRUE,
+                                         geometry = FALSE,
                                          key = census_key
 )
-GA_pop_2010 <- tibble(GA_pop_2010)[,-c(2,3,5)] # drop geometry, variable code, and county name
+
+GA_pop_2010 <- GA_pop_2010 %>% select(GEOID, value)
 names(GA_pop_2010)[2] <- "Pop2010"
 
 GA_cauc_2010 <- tidycensus::get_decennial(geography = "county",
                                           variables = "H006002", # total householder caucasian-only
                                           year = 2010,
                                           state = c("Georgia"),
-                                          geometry = TRUE,
+                                          geometry = FALSE,
                                           key = census_key
 )
-GA_cauc_2010 <- tibble(GA_cauc_2010)[,-c(2,3,5)] # drop geometry, variable code, and county name
+GA_cauc_2010 <- GA_cauc_2010 %>% select(GEOID, value) # drop geometry, variable code, and county name
 names(GA_cauc_2010)[2] <- "Cauc2010"
 
 GA_hous_2010 <- tidycensus::get_decennial(geography = "county",
                                           variables = "H001001", # total households
                                           year = 2010,
                                           state = c("Georgia"),
-                                          geometry = TRUE,
+                                          geometry = FALSE,
                                           key = census_key
 )
-GA_hous_2010 <- tibble(GA_hous_2010)[,-c(2,3,5)] # drop geometry, variable code, and county name
+GA_hous_2010 <- GA_hous_2010 %>% select(GEOID, value) # drop geometry, variable code, and county name
 names(GA_hous_2010)[2] <- "Hous2010"
 
 # Merge 2010 Census data
@@ -136,7 +137,7 @@ CoV_GA <- geoCoV[geoCoV@data$Province_State == "Georgia",]
 geoCoV <- NULL # conserve memory
 
 # Merge case data with population data
-CoV_GA_pop <- sp::merge(CoV_GA, tibble(GA_2010), "GEOID", "GEOID")
+CoV_GA_pop <- sp::merge(CoV_GA, tibble(GA_2010), by.x="GEOID", by.y="GEOID")
 CoV_GA <- NULL # conserve memory
 GA_2010 <- NULL # conserve memory
 
